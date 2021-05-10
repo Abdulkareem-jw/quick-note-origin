@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'sign_up.dart';
 
 
 void main() {
@@ -15,14 +16,16 @@ class MyApp extends StatefulWidget {
 class _State extends State<MyApp> {
   bool passwordhideen=true;
   var iconvisibel=Icons.visibility_off;
-  bool visibility_password=false;
+  bool visibility_password=true;
   
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
       
+      home: Scaffold(
+       resizeToAvoidBottomPadding: false,
+       
         body: Column(
           children: <Widget>[
             Row(
@@ -46,6 +49,8 @@ class _State extends State<MyApp> {
                   TextField(decoration: InputDecoration(
                     hintText: 'Username',
                      prefix: Icon(Icons.email),
+                     
+                     
                   ),),
                   SizedBox(height: 7,),
 
@@ -61,50 +66,55 @@ class _State extends State<MyApp> {
                   ),
                   ),
 
-                 FlatButton(
+                RaisedButton(
                    color: Theme.of(context).primaryColor,
                    onPressed: (){},
-
+                   
                     child: Center(child: Text('Login',style: TextStyle(color:Colors.white),)),
                     ),
+                    
                 ],
                 ),
               ), //second Row
-      Expanded(child: SizedBox(height: 100,)),
-             Expanded(
-                            child: Center(
-                    child: RichText(
-                    text:TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Don\'t have an account?',
-                          style: TextStyle(color:Colors.black)
-                        ),
-                        TextSpan(
-                          text: ' Create account',
-                          style: TextStyle(color:Colors.orange,decoration: TextDecoration.underline),
-                          
-                          recognizer: TapGestureRecognizer()..onTap =()async{
-                            var url="https://www.youtube.com/";
-                            if (await canLaunch(url)){
-                              await launch(url);
-                            }
-                            else{
-                              throw 'Can\'t load Url';
-                            }
-                          }
-                        ),
-                        TextSpan(
-                          text: '\n                   \n                    Or continue using ',
-                          style: TextStyle(color:Colors.black)
-                        ),
-                      ]
+      SizedBox(height: 100,),
+            Center(
+                    child: Column(
+                      children: <Widget>[
+                     SizedBox(height: 10,),
+                       
+                        Row(
+                      children: <Widget>[
+                            SizedBox(width: 50,),
+                            Text("Don't have an account?"),
+                            Builder(builder: (context)=>
+                              Center(
+                                child: FlatButton(
+                                onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>Sign_up())), 
+                                child:Text('Create account',style:TextStyle(decoration: TextDecoration.underline,color: Colors.orange),
+                              ),
+                              ),
+                            ),
+                            ),
+                      ],
                     ),
+                           
+                    Row(
+                        children: <Widget>[
+                             SizedBox(width:135,),
+                           Text('Or continue using'),
+
+                        ],),
+                        
                     
-                     ),
+                    SizedBox(height: 40,),
+
+                      ],)
+                   
+                    
                     ),
-             ),
+             
               
+                           
              
                 
                
@@ -142,5 +152,7 @@ class _State extends State<MyApp> {
      iconvisibel=Icons.visibility_off;
    });
  }
+
+
 }
 
